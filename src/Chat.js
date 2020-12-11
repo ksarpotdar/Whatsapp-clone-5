@@ -11,23 +11,20 @@ import SidebarChat from './SidebarChat'
 import InsertEmoticon from "@material-ui/icons/InsertEmoticon"
 
 
-function message(e){
-  console.log(e.target.value)
-}
-
-function sendMessage(e){
- 
-}
-
-
 
 export default function Chat() {
 
   const [seed, setSeed] = useState("")
+  const [message, setMessage] = useState("")
   useEffect(()=>{
       setSeed(Math.floor(Math.random() * 5000))
   },[])
 
+  function sendMessage(e){
+    e.preventDefault()
+    console.log("you type >>>>>"+" "+ message)
+    setMessage("")
+  }
 
   return (
     <div className="chat">
@@ -59,9 +56,9 @@ export default function Chat() {
       </div>
       <div className="chat_footer">
         <InsertEmoticon />
-        <form type="submit" onClick={sendMessage} >
-          <input type="text" onChange={(e) => message(e)} />
-          <button>Send a message</button>
+        <form>
+          <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} />
+          <button onClick={(e) => sendMessage(e)} type="submit" >Send a message</button>
         </form>
         <MicIcon />        
       </div>
